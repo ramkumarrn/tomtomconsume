@@ -1,4 +1,4 @@
-# Air Quality Custom microservice
+# Rabbitmq consume microservice
 
 ## PreRequisites
 
