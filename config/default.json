@@ -1,0 +1,16 @@
+{
+    "env": "default",
+    "app": {
+        "port": 6001,
+        "host": "localhost",
+        "authEnabled": false,
+        "authHeader": "Basic ",
+        "userRefereshInterval": 900000,
+        "gcInterval": 3600000
+
+    },
+    "auth": {
+        "secret": "secret",
+        "ttl": 3600
+    }
+}

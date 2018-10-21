@@ -1,0 +1,10 @@
+language: node_js
+deploy:
+    provider: gae
+    # Skip cleanup so api_key.py and vendored dependencies are still there
+    skip_cleanup: true
+    keyfile: client-secret.json
+    project: continuous-deployment-python
+    default: true
+    on:
+        all_branches: master

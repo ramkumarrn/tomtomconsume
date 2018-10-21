@@ -1,0 +1,35 @@
+{
+    "name": "Suresh",
+    "empid": "123445",
+    "leaves":[
+            {
+            "leavetype":"Casual Leave",
+            "total":"12",
+            "availed":"1",
+            "balance":"11",
+            "sitelink":""
+            },
+            {
+            "leavetype":"Sick Leave",
+            "total":"12",
+            "availed":"2",
+            "balance":"10",
+            "sitelink":""
+            },
+            {
+            "leavetype":"Floating Holiday",
+            "total":"2",
+            "availed":"0",
+            "balance":"2",
+            "sitelink":""
+            },
+            {
+            "leavetype":"Provilege Leave",
+            "total":"25",
+            "availed":"0",
+            "balance":"25",
+            "sitelink":""
+            }
+    ]
+}
+    

@@ -1,0 +1,36 @@
+{
+  "name": "rabbitqconsume",
+  "version": "1.0.0",
+  "description": "consume message from queue",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.6.0",
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.18.2",
+    "config": "^1.30.0",
+    "constants": "0.0.2",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "express-winston": "^2.5.1",
+    "firebase": "^4.13.1",
+    "generic-pool": "^3.4.2",
+    "jsonwebtoken": "^8.2.1",
+    "lodash": "^4.17.10",
+    "method-override": "^2.3.10",
+    "mongodb": "^3.0.10",
+    "multer": "^1.3.0",
+    "node-rest-client": "^3.1.0",
+    "path": "^0.12.7",
+    "swagger-jsdoc": "^1.9.7",
+    "util": "^0.10.3",
+    "winston": "^2.4.2",
+    "winston-daily-rotate-file": "^3.1.3",
+    "amqplib": "^0.5.2"
+  }
+}
