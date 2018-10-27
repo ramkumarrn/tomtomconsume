@@ -11,3 +11,6 @@ deploy:
   no_promote: true
   on:
     all_branches: master
+before_install:
+- openssl aes-256-cbc -K $encrypted_82d4fdf204ec_key -iv $encrypted_82d4fdf204ec_iv
+  -in client-secret.json.enc -out client-secret.json -d
