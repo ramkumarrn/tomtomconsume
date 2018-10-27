@@ -8,7 +8,7 @@ deploy:
   keyfile: client-secret.json
   project: node2-220714
   default: true
-  no_promote: true
+  no_promote: false
   on:
     all_branches: master
 before_install:
