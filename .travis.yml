@@ -1,10 +1,13 @@
-language: node_js
+sudo: false
+language: node
+script:
+- echo "No Script to run"
 deploy:
-    provider: gae
-    # Skip cleanup so api_key.py and vendored dependencies are still there
-    skip_cleanup: true
-    keyfile: client-secret.json
-    project: continuous-deployment-python
-    default: true
-    on:
-        all_branches: master
+  provider: gae
+  skip_cleanup: true
+  keyfile: client-secret.json
+  project: Node2
+  default: true
+  no_promote: true
+  on:
+    all_branches: master
