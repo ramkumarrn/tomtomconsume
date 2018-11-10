@@ -4,8 +4,10 @@ var fileService = require(rootdir+'/services/fileservice.js');
 var Channel = require(rootdir+'/services/channel.js');
 var util = require(rootdir+'/utils/util.js');
 var mongoService = require(rootdir+'/services/mongoservice.js');
+var restClientService = require(rootdir+'/services/restclientservice.js');
 mongoService.connectToServer();
 var ObjectId = require('mongodb').ObjectId; 
+
 
 module.exports = {
     
@@ -41,14 +43,48 @@ module.exports = {
               console.warn(err.message);
             }
             else if (msg) {
-              var jsonData = JSON.parse(msg.content);
-              console.log('consuming %j', msg.content.toString());
-              var db = mongoService.getDb();
-              mongoService.insertDbCollections('smarttravel',jsonData,function(jsonRes){   
+              var responsePayload="";
+              console.log('consuming %j', msg.content.toString()); 
+                var jsonData = JSON.parse(msg.content);
+                var lat = jsonData.incident.location.lat;
+                var lng = jsonData.incident.location.lng;
+                var url = "https://api.tomtom.com/traffic/services/4/flowSegmentData/absolute/10/json?key=925XUD4MhjVJnTe9Zza1FWfjfhkIKxDI&point="+lat+","+lng;
+                restClientService.getAxiosData(url,function(response){
+                  
+                  responsePayload = util.processData(response.data,jsonData);
+                  var allMarkers = jsonData.nearByMarkers;
+                  if(allMarkers){
+                     if(allMarkers.length > 0)
+                      {
+                        responsePayload.userVerified = true;
+                        _.each(allMarkers,function(val){
+                            if(!val.userVerified){
+                               var id = val._id;
+                               var qry = {userVerified:false};
+                               var upd = {$set:{userVerified:true}};
+                              // console.log('id=='+id)
+                               var db = mongoService.getDb();
+
+                               mongoService.updateDbCollections('smarttravel',qry,upd,function(jsonRes){
+                                // console.log(jsonRes)             
+                            });
+                          }  
+                        });                        
+                      }
+                      
+                    }
+
+                    console.log('updated ==', JSON.stringify(responsePayload));
+
+                     //  var db = mongoService.getDb();
+                    //  mongoService.insertDbCollections('smarttravel',responsePayload,function(jsonRes){   
+                    //   res.status(200).json(jsonRes);
+                   // console.log(jsonRes);
+               //});
+
+                  })
                 
-                 //res.status(200).json(jsonRes);
-                 console.log(jsonRes);
-               });
+
               setTimeout(function() {
                 channel.ack(msg);
                 consume();
