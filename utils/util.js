@@ -59,7 +59,6 @@ module.exports = {
 		console.log("severity per="+severityPer);
 		switch(true){
 			case (trafficPer >= 80):
-			console.log('1');
 			if(severityPer <= 40)
 					trafficVerified = true;
 			break;
@@ -68,7 +67,7 @@ module.exports = {
 
 			 break;
 			case (trafficPer < 40):
-			console.log('3');
+			
 			if(severityPer >= 40)
 				trafficVerified = true;
 

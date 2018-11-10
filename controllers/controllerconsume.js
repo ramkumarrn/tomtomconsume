@@ -62,11 +62,10 @@ module.exports = {
                                var id = val._id;
                                var qry = {userVerified:false};
                                var upd = {$set:{userVerified:true}};
-                              // console.log('id=='+id)
                                var db = mongoService.getDb();
 
                                mongoService.updateDbCollections('smarttravel',qry,upd,function(jsonRes){
-                                // console.log(jsonRes)             
+                              
                             });
                           }  
                         });                        
@@ -76,11 +75,11 @@ module.exports = {
 
                     console.log('updated ==', JSON.stringify(responsePayload));
 
-                     //  var db = mongoService.getDb();
-                    //  mongoService.insertDbCollections('smarttravel',responsePayload,function(jsonRes){   
+                      var db = mongoService.getDb();
+                      mongoService.insertDbCollections('smarttravel',responsePayload,function(jsonRes){   
                     //   res.status(200).json(jsonRes);
                    // console.log(jsonRes);
-               //});
+               });
 
                   })
                 
