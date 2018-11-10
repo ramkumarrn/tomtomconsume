@@ -60,7 +60,7 @@ module.exports = {
                         _.each(allMarkers,function(val){
                             if(!val.userVerified){
                                var id = val._id;
-                               var qry = {userVerified:false};
+                               var qry = {_id: ObjectId(id)}
                                var upd = {$set:{userVerified:true}};
                                var db = mongoService.getDb();
 
@@ -72,8 +72,6 @@ module.exports = {
                       }
                       
                     }
-
-                    console.log('updated ==', JSON.stringify(responsePayload));
 
                       var db = mongoService.getDb();
                       mongoService.insertDbCollections('smarttravel',responsePayload,function(jsonRes){   
