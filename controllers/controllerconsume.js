@@ -52,6 +52,11 @@ module.exports = {
                 restClientService.getAxiosData(url,function(response){
                   
                   responsePayload = util.processData(response.data,jsonData);
+                  var db = mongoService.getDb();
+                  mongoService.insertDbCollections('smarttravel',responsePayload,function(jsonRes){   
+                //   res.status(200).json(jsonRes);
+               // console.log(jsonRes);
+                    });
                   var allMarkers = jsonData.nearByMarkers;
                   if(allMarkers){
                      if(allMarkers.length > 0)
@@ -62,10 +67,8 @@ module.exports = {
                                var id = val._id;
                                var qry = {_id: ObjectId(id)}
                                var upd = {$set:{userVerified:true}};
-                               var db = mongoService.getDb();
-
                                mongoService.updateDbCollections('smarttravel',qry,upd,function(jsonRes){
-                              
+                                  mongoService.closeDb();
                             });
                           }  
                         });                        
@@ -73,11 +76,7 @@ module.exports = {
                       
                     }
 
-                      var db = mongoService.getDb();
-                      mongoService.insertDbCollections('smarttravel',responsePayload,function(jsonRes){   
-                    //   res.status(200).json(jsonRes);
-                   // console.log(jsonRes);
-               });
+                  
 
                   })
                 
