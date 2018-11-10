@@ -8,7 +8,7 @@ module.exports = {
   connectToServer: function() {
     MongoClient.connect(url, function( err, client ) {
         console.log('connected');
-        _db = client.db("tomtom");
+        _db = client.db("tom");
       //return callback( err );
     } );
   },
@@ -17,6 +17,7 @@ module.exports = {
   },
   closeDb: function(){
     _db.close();
+    
   },
   getDbCollectionByQry: function(colname,qry,callback){
     _db.collection(colname).find(qry).toArray(function(err, result) {

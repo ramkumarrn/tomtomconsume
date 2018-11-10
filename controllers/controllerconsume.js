@@ -18,7 +18,7 @@ module.exports = {
     },
     getSmartTravelData: function(req, res, next){
       var db = mongoService.getDb();
-      mongoService.getDbCollections('smarttravel',function(jsonRes){
+      mongoService.getDbCollections('commute',function(jsonRes){
                     
          //mongoService.closeDb();
           res.status(200).json(jsonRes);
@@ -50,32 +50,32 @@ module.exports = {
                 var lng = jsonData.incident.location.lng;
                 var url = "https://api.tomtom.com/traffic/services/4/flowSegmentData/absolute/10/json?key=925XUD4MhjVJnTe9Zza1FWfjfhkIKxDI&point="+lat+","+lng;
                 restClientService.getAxiosData(url,function(response){
-                  
-                  responsePayload = util.processData(response.data,jsonData);
+                 responsePayload = util.processData(response.data,jsonData);
                   var db = mongoService.getDb();
-                  mongoService.insertDbCollections('smarttravel',responsePayload,function(jsonRes){   
-                //   res.status(200).json(jsonRes);
-               // console.log(jsonRes);
-                    });
+                  
                   var allMarkers = jsonData.nearByMarkers;
                   if(allMarkers){
                      if(allMarkers.length > 0)
                       {
-                        responsePayload.userVerified = true;
+                        responsePayload.incident.userVerified = true;
                         _.each(allMarkers,function(val){
                             if(!val.userVerified){
                                var id = val._id;
                                var qry = {_id: ObjectId(id)}
                                var upd = {$set:{userVerified:true}};
-                               mongoService.updateDbCollections('smarttravel',qry,upd,function(jsonRes){
-                                  mongoService.closeDb();
-                            });
+                              // var db = mongoService.getDb();
+                               mongoService.updateDbCollections('commute',qry,upd,function(jsonRes){
+
+                           });
                           }  
                         });                        
                       }
                       
                     }
-
+                    mongoService.insertDbCollections('commute',responsePayload.incident,function(jsonRes){   
+                      //   res.status(200).json(jsonRes);
+                          // console.log(jsonRes);
+                          });
                   
 
                   })

@@ -38,7 +38,7 @@ app.get('/', function(req, res){
 
 app.listen(process.env.PORT, function(){
 
-    //console.log("Application started on port: "+ config.app.port);
+   // console.log("Application started on port: "+ config.app.port);
     console.log("Application started on port: "+ process.env.PORT);
     
     controller.consumeFromQueue();

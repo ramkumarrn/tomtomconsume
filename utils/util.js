@@ -30,14 +30,9 @@ module.exports = {
 		var freeFlow = responseData.flowSegmentData.freeFlowSpeed;
 
 		
-		payload.incidentType = jsonData.incident.incidentType;
-		payload.severity=jsonData.incident.severity;
-		payload.images = jsonData.incident.images;
-		payload.location.lat = jsonData.incident.location.lat;
-		payload.location.lng=jsonData.incident.location.lng;
 		var unixdatetime = moment().valueOf();
-		payload.created = unixdatetime;
-		payload.userVerified = false;
+		jsonData.incident.created = unixdatetime;
+		jsonData.incident.userVerified = false;
 
 		var trafficPer = Math.ceil(curSpeed/freeFlow*100);
 		console.log("trafficper="+trafficPer);
@@ -77,10 +72,10 @@ module.exports = {
 		}
 
 		console.log("after verify="+trafficVerified);
-		payload.trafficVerified = trafficVerified;	
+		jsonData.incident.trafficVerified = trafficVerified;	
 	
 		
-		return payload;
+		return jsonData;
 	  }
 
 
