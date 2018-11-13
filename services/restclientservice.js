@@ -17,6 +17,16 @@ getAxiosData:function(url,callback){
       console.log(error);
     });
     
+},
+postAxios:function(url,postpayload,callback){
+
+    axios.post(url, postpayload)
+      .then(function (response) {
+        callback(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
 }
 }
 

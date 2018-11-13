@@ -22,6 +22,7 @@
     "express-winston": "^2.5.1",
     "firebase": "^4.13.1",
     "generic-pool": "^3.4.2",
+    "geolib": "^2.0.24",
     "jsonwebtoken": "^8.2.1",
     "lodash": "^4.17.10",
     "method-override": "^2.3.10",

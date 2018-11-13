@@ -13,5 +13,9 @@ router.get('/getsmartdata', function(req, res,next) {
   controller.getSmartTravelData(req, res, next);
 });
 
+router.post('/routes',function(req,res,next){
+   controller.getRoutes(req,res,next);
+});
+
 module.exports = router;
 

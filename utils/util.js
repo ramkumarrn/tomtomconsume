@@ -1,6 +1,7 @@
 var _ = require('lodash');
 var moment = require('moment');
 var request = require('request');
+var geolib = require("geolib");
 
 var payload= {
 	
@@ -21,6 +22,38 @@ module.exports = {
 	encode: function (doc) {  
 		return new Buffer(JSON.stringify(doc));
 	  },
+
+	isPointInside : function(location,arrPoints){
+		var blnFlag = geolib.isPointInside(location,arrPoints);	
+		console.log(blnFlag);
+		return blnFlag;
+	} , 
+	sortedPoints:function(points){
+		points = points.slice(0); // copy the array, since sort() modifies it
+		var stringify_point = function(p) { return p.latitude + ',' + p.longitude; };
+	
+		// finds a point in the interior of `pts`
+		var avg_points = function(pts) {
+			var x = 0;
+			y = 0;
+			for(i = 0; i < pts.length; i++) {
+				x += pts[i].latitude;
+				y += pts[i].longitude;
+			}
+			return {latitude: x/pts.length, longitude:y/pts.length};
+		}
+		var center = avg_points(points);
+	
+		// calculate the angle between each point and the centerpoint, and sort by those angles
+		var angles = {};
+		for(i = 0; i < points.length; i++) {
+			angles[stringify_point(points[i])] = Math.atan(points[i].latitude - center.latitude, points[i].longitude - center.longitude);
+		}
+		points.sort(function(p1, p2) {
+			return angles[stringify_point(p1)] - angles[stringify_point(p2)];
+		});
+		return points;
+	},
 	  
 	  processData : function(responseData,jsonData){
 
