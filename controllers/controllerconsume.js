@@ -119,7 +119,7 @@ module.exports = {
                   if(allMarkers){
                      if(allMarkers.length > 0)
                       {
-                        responsePayload.incident.userViews = allMarkers.length;
+                        responsePayload.incident.userViews = allMarkers.length+1;
                         if(allMarkers.length > 1)
                           responsePayload.incident.userVerified = true;
 
@@ -134,7 +134,7 @@ module.exports = {
                            });
                           }  
                         });                        
-                      }else{responsePayload.incident.userViews = 0;
+                      }else{responsePayload.incident.userViews = 1;
                         responsePayload.incident.userVerified = false;
                       }
                       
