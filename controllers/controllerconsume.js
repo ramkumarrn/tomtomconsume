@@ -134,10 +134,10 @@ module.exports = {
                            });
                           }  
                         });                        
+                      }else{responsePayload.incident.userViews = 0;
+                        responsePayload.incident.userVerified = false;
                       }
                       
-                    }else{responsePayload.incident.userViews = 0;
-                      responsePayload.incident.userVerified = false;
                     }
                     mongoService.insertDbCollections('commute',responsePayload.incident,function(jsonRes){   
                       //   res.status(200).json(jsonRes);
