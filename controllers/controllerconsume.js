@@ -120,20 +120,31 @@ module.exports = {
                      if(allMarkers.length > 0)
                       {
                         responsePayload.incident.userViews = allMarkers.length+1;
-                        if(allMarkers.length > 1)
-                          responsePayload.incident.userVerified = true;
 
-                        _.each(allMarkers,function(val){
+                        if(allMarkers.length > 1){
+                          responsePayload.incident.userVerified = true;
+                          _.each(allMarkers,function(val){
                             if(!val.userVerified){
                                var id = val._id;
                                var qry = {_id: ObjectId(id)}
-                               var upd = {$set:{userVerified:true}};
-                              // var db = mongoService.getDb();
+                               var upd = {$set:{userVerified:true,userViews:allMarkers.length+1}};
                                mongoService.updateDbCollections('commute',qry,upd,function(jsonRes){
 
                            });
                           }  
-                        });                        
+                        });  
+                        }else{
+                          var val = allMarkers[0];
+                          var id = val._id;
+                          var qry = {_id: ObjectId(id)}
+                          var upd = {$set:{userViews:allMarkers.length+1}};
+                           mongoService.updateDbCollections('commute',qry,upd,function(jsonRes){
+
+                      });
+                        }
+                          
+
+                                           
                       }else{responsePayload.incident.userViews = 1;
                         responsePayload.incident.userVerified = false;
                       }
