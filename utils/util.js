@@ -2,6 +2,10 @@ var _ = require('lodash');
 var moment = require('moment');
 var request = require('request');
 var geolib = require("geolib");
+const accountSid = 'AC3a7ac1d46d5f4d30e1482b507b1d7639';
+const authToken = '79142af66ba007668fa666c3d7c0903b';
+const client = require('twilio')(accountSid, authToken);
+
 
 var payload= {
 	
@@ -22,7 +26,24 @@ module.exports = {
 	encode: function (doc) {  
 		return new Buffer(JSON.stringify(doc));
 	  },
+     callSOS :function(req,address,callback){
+		 var type = req.incidentType;
+		 var sev = req.severity;
+	
+		 client.calls
+		.create({
+		   url: encodeURI('https://handler.twilio.com/twiml/EHb96b2f5ba48b039e6a60cf02e13709d9?Location='+address+'&incidenttype='+type+'&severity='+sev),
+		   to: '+919444223835',
+		   from: '+17275135234'
+		 })
+			.then(call => {
+			   return callback(call);
+			}
+			)
+		.done(
 
+		);
+	} ,
 	isPointInside : function(location,arrPoints){
 		var blnFlag = geolib.isPointInside(location,arrPoints);	
 		console.log(blnFlag);

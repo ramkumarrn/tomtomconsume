@@ -37,6 +37,7 @@ module.exports = {
         return callback(result);  
   });
   },
+  
   updateDbCollections: function(colname,qry,newValues,callback){
     _db.collection(colname).updateOne(qry,newValues, function (err, result) {
       if(err)

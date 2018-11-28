@@ -24,6 +24,24 @@ module.exports = {
            res.status(200).json(jsonRes);
         });
   },
+  triggerSOS: function(req,res,next){
+    var payload = req.body;
+    var lat = payload.location.lat;
+    var lng = payload.location.lng;
+    var revUrl = "https://api.tomtom.com/search/2/reverseGeocode/"+lat+","+lng+".json?key=925XUD4MhjVJnTe9Zza1FWfjfhkIKxDI&language=en-US"
+    var searchUrl = "https://api.tomtom.com/search/2/search/"+lat+","+lng+".json?&language=en-GB&key=925XUD4MhjVJnTe9Zza1FWfjfhkIKxDI&limit=1";
+    
+    restClientService.getAxiosData(searchUrl,function(responseData){
+      
+        var location = responseData.data.results[0].address.freeformAddress;
+         util.callSOS(payload,location,function(jsonRes){
+    
+          res.status(200).json(jsonRes);
+        })    
+    });
+    
+   
+  },
 
    getRoutes: function(req,res,next){
 
@@ -121,7 +139,7 @@ module.exports = {
                       {
                         responsePayload.incident.userViews = allMarkers.length+1;
 
-                        if(allMarkers.length > 1){
+                        if(allMarkers.length >= 1){
                           responsePayload.incident.userVerified = true;
                           _.each(allMarkers,function(val){
                             if(!val.userVerified){
@@ -133,7 +151,7 @@ module.exports = {
                            });
                           }  
                         });  
-                        }else{
+                        }/*else{
                           var val = allMarkers[0];
                           var id = val._id;
                           var qry = {_id: ObjectId(id)}
@@ -141,9 +159,7 @@ module.exports = {
                            mongoService.updateDbCollections('commute',qry,upd,function(jsonRes){
 
                       });
-                        }
-                          
-
+                        }*/
                                            
                       }else{responsePayload.incident.userViews = 1;
                         responsePayload.incident.userVerified = false;
@@ -152,7 +168,8 @@ module.exports = {
                     }
                     mongoService.insertDbCollections('commute',responsePayload.incident,function(jsonRes){   
                       //   res.status(200).json(jsonRes);
-                          // console.log(jsonRes);
+                           //console.log(jsonRes);
+                          
                           });
                   
 

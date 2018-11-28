@@ -13,6 +13,10 @@ router.get('/getsmartdata', function(req, res,next) {
   controller.getSmartTravelData(req, res, next);
 });
 
+router.post('/triggersos',function(req,res,next){
+   controller.triggerSOS(req,res,next);
+});
+
 router.post('/routes',function(req,res,next){
    controller.getRoutes(req,res,next);
 });
